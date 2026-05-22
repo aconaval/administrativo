@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aço Naval — Gestor de Comissões</title>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -98,7 +99,86 @@ textarea{font-family:inherit}
 .ent-table tr.ag td{background:#fff}
 .ent-table tr.rt td{background:#FFFDF5}
 .ent-table tr.en td{background:#FAFFFE;opacity:0.75}
-@media(max-width:600px){body{padding:12px}.container{padding:14px}.field{min-width:100%}.row{flex-direction:column}.btn{width:100%}}
+@media(max-width:768px){
+  body{padding:0}
+  .container{border-radius:0;box-shadow:none;padding:0;margin:0}
+  h1{font-size:18px}
+  .subtitle{display:none}
+
+  /* Header mês */
+  .header-mes{border-radius:0;padding:10px 14px;gap:8px}
+  .header-mes .lbl{font-size:11px;width:100%}
+  .header-mes select{flex:1;font-size:13px}
+  .header-mes input{width:80px!important;font-size:13px}
+  #ref-badge{display:none}
+
+  /* Nav — scroll horizontal */
+  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:10px 14px 0;margin-bottom:0;border-bottom:none;gap:4px;background:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.06)}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-tab{white-space:nowrap;padding:8px 14px;font-size:13px;flex-shrink:0;border-radius:6px 6px 0 0;border-bottom:2px solid transparent}
+  .nav-tab.active{border-bottom-color:#185FA5;background:#E6F1FB}
+
+  /* Páginas */
+  .page{padding:14px}
+
+  /* Cards */
+  .card{padding:12px 14px;border-radius:8px;margin-bottom:12px}
+
+  /* Rows e fields — empilhar verticalmente */
+  .row{flex-direction:column;gap:8px}
+  .field{min-width:100%;flex:none}
+
+  /* Botões — largura total exceto inline */
+  .btn{width:100%;justify-content:center;padding:10px 14px;font-size:14px}
+  .btn.inline{width:auto}
+  .del{width:auto}
+
+  /* Tabs de vendedor */
+  .tab-bar{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .tab-bar::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;flex-shrink:0}
+
+  /* Tabelas — scroll horizontal */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px}
+  table{min-width:520px;font-size:12px}
+  th,td{padding:8px 10px}
+
+  /* Métricas — 2 por linha */
+  .metric{min-width:calc(50% - 5px);flex:1}
+  .metric .val{font-size:16px}
+
+  /* Barras */
+  .bar-label{width:70px;font-size:11px}
+  .bar-val{width:90px;font-size:11px}
+
+  /* Header mês de referência no topo da página */
+  h2{font-size:15px}
+  h3{font-size:13px}
+
+  /* Solicitações */
+  .sol-card{padding:12px}
+  textarea{font-size:14px}
+
+  /* Save info */
+  .save-info{bottom:70px;font-size:11px;padding:6px 12px}
+
+  /* Status sel nas entregas */
+  .status-sel{font-size:12px;width:100%;margin-top:4px}
+  .ent-table td,.ent-table th{padding:8px 10px;font-size:12px}
+
+  /* Check row */
+  .check-row{font-size:14px}
+
+  /* Anuncios */
+  .anuncio-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .anuncio-input{width:100%}
+  .anuncio-pct{width:100%;text-align:left}
+
+  /* Filtros inline */
+  .filtros-inline{flex-direction:column;gap:8px}
+  .filtros-inline select,.filtros-inline button{width:100%}
+}
+
 </style>
 </head>
 <body>
@@ -328,6 +408,15 @@ textarea{font-family:inherit}
       <div id="lista-prod" style="margin-top:12px"><p class="empty">Nenhum produto cadastrado.</p></div>
     </div>
     <div class="card">
+      <h3>Links dos vendedores</h3>
+      <p style="font-size:12px;color:#888;margin-bottom:12px">Envie o link abaixo para cada vendedor ver suas comissões. O link funciona pelo celular também.</p>
+      <div id="lista-links-vend"><p class="empty">Nenhum vendedor cadastrado.</p></div>
+    </div>
+    <div class="card">
+      <h3>Links do sistema</h3>
+      <div id="lista-links-sistema"></div>
+    </div>
+    <div class="card">
       <h3>Dados e backup</h3>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
         <button class="btn" onclick="exportarBackup()">💾 Exportar backup (JSON)</button>
@@ -436,7 +525,7 @@ function carregar() {
       document.querySelector('.container').style.opacity = '1';
       document.querySelector('.container').style.pointerEvents = 'auto';
       // Renderiza tudo após carregar
-      renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd();
+      renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd(); renderLinksVendedores();
     })
     .catch(e => {
       console.error('Erro ao carregar:', e);
@@ -451,7 +540,7 @@ function carregar() {
       } catch(_) {}
       document.querySelector('.container').style.opacity = '1';
       document.querySelector('.container').style.pointerEvents = 'auto';
-      renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd();
+      renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd(); renderLinksVendedores();
     });
 
   // Escuta mudanças em tempo real (outro computador salvou)
@@ -466,7 +555,7 @@ function carregar() {
     sts = d.sts || {};
     bonus = d.bonus || [];
     sols = d.sols || [];
-    renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd();
+    renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd(); renderLinksVendedores();
     if (document.getElementById('page-entregas').classList.contains('active')) renderEntregas();
     if (document.getElementById('page-vendas').classList.contains('active')) renderVen();
   });
@@ -538,7 +627,7 @@ function addVendedor(){
   if(vs.find(v=>v.nome.toLowerCase()===n.toLowerCase())){alert('Vendedor já cadastrado.');return;}
   vs.push({id:Date.now(),nome:n,perc:pc,bonus:bn});
   document.getElementById('v-nome').value='';document.getElementById('v-perc').value='';document.getElementById('v-bonus').value='';
-  salvar();renderV();renderSel();renderTabs();
+  salvar();renderV();renderLinksVendedores();renderSel();renderTabs();
 }
 function delV(id){
   if(!confirm('Remover vendedor e seus registros?'))return;
@@ -546,7 +635,7 @@ function delV(id){
   ps=ps.filter(p=>p.vid!==id);
   bonus=bonus.filter(b=>b.vid!==id);
   if(ta===id)ta=vs.length?vs[0].id:null;
-  salvar();renderV();renderSel();renderTabs();
+  salvar();renderV();renderLinksVendedores();renderSel();renderTabs();
 }
 function renderV(){
   const el=document.getElementById('lista-v');
@@ -576,6 +665,51 @@ function editarVendedor(id){
   v.perc=pc;v.bonus=bn;
   salvar();renderV();renderRel();
   alert('Vendedor atualizado!');
+}
+
+function renderLinksVendedores(){
+  const el=document.getElementById('lista-links-vend');
+  const elSis=document.getElementById('lista-links-sistema');
+  if(!el)return;
+  const path=window.location.pathname.replace(/[^/]*$/,'');
+  const base=window.location.origin+path;
+
+  if(!vs.length){el.innerHTML='<p class="empty">Nenhum vendedor cadastrado.</p>';return;}
+  let h='';
+  vs.forEach(v=>{
+    const link=base+'vendedor.html?v='+encodeURIComponent(v.nome.toLowerCase());
+    h+='<div style="background:#f5f7fa;border-radius:8px;padding:12px 14px;margin-bottom:10px">';
+    h+='<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">';
+    h+='<strong>'+v.nome+'</strong><span style="font-size:12px;color:#888">'+v.perc+'%'+(v.bonus>0?' + R$'+v.bonus+'/nº':'')+'</span></div>';
+    h+='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">';
+    h+='<input type="text" value="'+link+'" readonly style="flex:1;font-size:12px;background:#fff;color:#185FA5;min-width:0;padding:7px 10px;border:1px solid #d0d4d8;border-radius:6px" onclick="this.select()" id="lv-'+v.id+'"/>';
+    h+='<button class="btn" style="white-space:nowrap;font-size:12px;padding:6px 12px;width:auto;flex-shrink:0" onclick="copiarLink(\'lv-'+v.id+'\',this)">📋 Copiar</button>';
+    h+='</div></div>';
+  });
+  el.innerHTML=h;
+
+  if(elSis){
+    const linkSec=base+'secretaria.html';
+    elSis.innerHTML='<div style="background:#f5f7fa;border-radius:8px;padding:12px 14px">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">'
+      +'<strong>🗂️ Secretaria — Solicitações</strong><span style="font-size:12px;color:#888">Link da Mari</span></div>'
+      +'<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'
+      +'<input type="text" value="'+linkSec+'" readonly style="flex:1;font-size:12px;background:#fff;color:#185FA5;min-width:0;padding:7px 10px;border:1px solid #d0d4d8;border-radius:6px" onclick="this.select()" id="l-sec"/>'
+      +'<button class="btn" style="white-space:nowrap;font-size:12px;padding:6px 12px;width:auto;flex-shrink:0" onclick="copiarLink(\'l-sec\',this)">📋 Copiar</button>'
+      +'</div></div>';
+  }
+}
+
+function copiarLink(id,btn){
+  const el=document.getElementById(id);if(!el)return;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(el.value);
+  } else {
+    el.select();try{document.execCommand('copy');}catch(e){}
+  }
+  const orig=btn.textContent;
+  btn.textContent='✅ Copiado!';btn.style.background='#EAF3DE';btn.style.color='#3B6D11';btn.style.borderColor='#63b922';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.color='';btn.style.borderColor='';},2000);
 }
 function renderSel(){
   let h='<option value="todos">Todos os vendedores</option>';
