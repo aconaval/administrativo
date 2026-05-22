@@ -15,60 +15,99 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 body{background:#f5f7fa;color:#222;min-height:100vh}
-.topo{background:#003366;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.topo h1{color:#fff;font-size:18px;font-weight:600}
-.topo .sub{color:#85B7EB;font-size:13px;margin-top:2px}
-.nome-badge{background:#185FA5;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600}
-.container{max-width:860px;margin:24px auto;padding:0 16px}
-.card{background:#fff;border:1px solid #e0e4e8;border-radius:10px;padding:16px 20px;margin-bottom:16px}
-.metric{background:#f5f7fa;border-radius:8px;padding:14px 18px;flex:1;min-width:110px}
-.metric .val{font-size:22px;font-weight:600}
-.metric .lbl{font-size:11px;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:0.3px}
+
+/* TOPO */
+.topo{background:linear-gradient(135deg,#003366 0%,#185FA5 100%);padding:20px 20px 24px;position:relative;overflow:hidden}
+.topo::after{content:'';position:absolute;bottom:-30px;left:0;right:0;height:60px;background:#f5f7fa;border-radius:50% 50% 0 0/30px 30px 0 0}
+.topo-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.topo-logo img{width:40px;height:40px;border-radius:8px;object-fit:contain;background:rgba(255,255,255,0.1);padding:4px}
+.topo-logo span{color:#fff;font-size:16px;font-weight:700;letter-spacing:0.5px}
+.saudacao{color:rgba(255,255,255,0.85);font-size:13px;margin-bottom:4px}
+.nome-vend{color:#fff;font-size:22px;font-weight:700}
+
+/* CONTAINER */
+.container{max-width:600px;margin:0 auto;padding:0 14px 32px;position:relative;z-index:1}
+
+/* CARD */
+.card{background:#fff;border:1px solid #e0e4e8;border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+
+/* MÉTRICAS */
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.metric{background:#f5f7fa;border-radius:10px;padding:12px 14px}
+.metric.full{grid-column:1/-1}
+.metric.verde{background:#EAF3DE}
+.metric .val{font-size:18px;font-weight:700;color:#222;line-height:1.2}
 .metric.azul .val{color:#185FA5}
 .metric.laranja .val{color:#854F0B}
 .metric.verde .val{color:#3B6D11}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-h2{font-size:16px;font-weight:600;color:#003366;margin-bottom:12px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#f5f7fa;color:#666;font-weight:600;text-align:left;padding:10px 12px;border-bottom:1px solid #e0e4e8;font-size:11px;text-transform:uppercase;letter-spacing:0.3px}
-td{padding:10px 12px;border-bottom:1px solid #f0f2f5}
-tr:last-child td{border-bottom:none}
-.total-row{background:#f5f7fa;font-weight:600}
-.badge-m{background:#E6F1FB;color:#0C447C;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
-.badge-prod{background:#EEEDFE;color:#534AB7;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
-.badge-meia{background:#f0f2f5;color:#555;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
-.badge-adt{background:#FAEEDA;color:#854F0B;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
-.empty{color:#999;font-size:13px;text-align:center;padding:30px 0;font-style:italic}
-.loading{text-align:center;padding:60px 20px;color:#666}
-.loading .spinner{width:40px;height:40px;border:3px solid #e0e4e8;border-top-color:#185FA5;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.erro{text-align:center;padding:60px 20px;color:#A32D2D}
-.erro h2{font-size:20px;margin-bottom:8px}
-.filtro{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.filtro label{font-size:13px;color:#666;font-weight:500}
-select{font-size:13px;padding:7px 10px;border:1px solid #d0d4d8;border-radius:6px;background:#fff;color:#222}
-.btn{font-size:13px;padding:8px 16px;border-radius:6px;border:1px solid #d0d4d8;background:#fff;color:#222;cursor:pointer;font-weight:500}
-.btn:hover{background:#f5f7fa}
+.metric.roxo .val{color:#534AB7}
+.metric .lbl{font-size:11px;color:#888;margin-top:3px;text-transform:uppercase;letter-spacing:0.3px}
+
+/* FILTRO */
+.filtro{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.filtro label{font-size:13px;color:#666;font-weight:500;flex-shrink:0}
+select{font-size:14px;padding:8px 10px;border:1px solid #d0d4d8;border-radius:8px;background:#fff;color:#222;flex:1;min-width:0}
+.btn{font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid #d0d4d8;background:#fff;color:#222;cursor:pointer;font-weight:500;flex-shrink:0}
 .btn-primary{background:#185FA5;color:#fff;border-color:#185FA5}
-.btn-primary:hover{background:#0C447C}
-.liquido-box{background:#EAF3DE;border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
-.liquido-box span:first-child{font-size:13px;color:#3B6D11;font-weight:600}
-.liquido-box span:last-child{font-size:22px;font-weight:700;color:#3B6D11}
-.status-chip{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
-.ag{background:#f0f2f5;color:#555}
-.rt{background:#FAEEDA;color:#854F0B}
-.en{background:#EAF3DE;color:#3B6D11}
-@media(max-width:600px){.container{padding:0 10px}.row{flex-direction:column}}
+
+/* TABELA OTIMIZADA */
+.tabela-wrap{overflow-x:auto;margin:0 -16px;padding:0 16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:#f5f7fa;color:#666;font-weight:600;text-align:left;padding:10px 10px;border-bottom:1px solid #e0e4e8;font-size:11px;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
+td{padding:12px 10px;border-bottom:1px solid #f0f2f5;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.total-row td{background:#f5f7fa;font-weight:700;border-bottom:none}
+.num{font-weight:700;color:#003366;font-size:15px}
+.cidade{font-size:13px;color:#444}
+.val-td{text-align:right;font-weight:600}
+.com-td{text-align:right;font-weight:700;color:#185FA5}
+.badge-meia{background:#f0f2f5;color:#555;font-size:10px;padding:1px 6px;border-radius:10px;font-weight:600;vertical-align:middle}
+
+/* SEÇÕES */
+.sec-titulo{font-size:12px;color:#666;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:16px 0 10px;padding-top:14px;border-top:1px solid #f0f2f5}
+.sec-titulo.roxo{color:#534AB7}
+.sec-titulo.laranja{color:#854F0B}
+
+/* RESUMO LÍQUIDO */
+.resumo-liq{background:#EAF3DE;border-radius:10px;padding:14px 16px;margin-top:14px}
+.resumo-linha{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#555}
+.resumo-linha.roxo{color:#534AB7}
+.resumo-linha.laranja{color:#854F0B}
+.resumo-total{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #c5e0ab;margin-top:4px}
+.resumo-total .label{font-size:14px;font-weight:700;color:#3B6D11}
+.resumo-total .valor{font-size:22px;font-weight:800;color:#3B6D11}
+
+/* BONUS/ADT */
+.bonus-card{background:#F5F3FF;border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.bonus-card .titulo{font-size:12px;color:#534AB7;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.3px}
+.adt-card{background:#FFF4E0;border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.adt-card .titulo{font-size:12px;color:#854F0B;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.3px}
+.item-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:13px}
+.item-row:last-child{border-bottom:none}
+.item-row .desc{color:#444;flex:1}
+.item-row .val{font-weight:700;flex-shrink:0;margin-left:10px}
+.item-row .val.roxo{color:#534AB7}
+.item-row .val.laranja{color:#854F0B}
+
+/* LOADING/ERRO */
+.loading{text-align:center;padding:80px 20px;color:#666}
+.spinner{width:40px;height:40px;border:3px solid #e0e4e8;border-top-color:#185FA5;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.erro{text-align:center;padding:80px 20px;color:#A32D2D}
+
+/* EMPTY */
+.empty{color:#999;font-size:13px;text-align:center;padding:28px 0;font-style:italic}
 </style>
 </head>
 <body>
 
 <div class="topo">
-  <div>
-    <h1>AÇO NAVAL</h1>
-    <div class="sub">Portal de Comissões</div>
+  <div class="topo-logo">
+    <img src="icon-180.png" alt="Aço Naval"/>
+    <span>AÇO NAVAL</span>
   </div>
-  <div id="nome-badge" class="nome-badge" style="display:none"></div>
+  <div class="saudacao" id="saudacao">Carregando...</div>
+  <div class="nome-vend" id="nome-vend"></div>
 </div>
 
 <div class="container">
@@ -81,17 +120,17 @@ select{font-size:13px;padding:7px 10px;border:1px solid #d0d4d8;border-radius:6p
     <p>Verifique o link com o responsável.</p>
   </div>
   <div id="conteudo" style="display:none">
-    <div class="filtro">
-      <label>Filtrar por mês:</label>
+    <div class="filtro" style="margin-top:16px">
+      <label>Mês:</label>
       <select id="f-mes" onchange="renderConteudo()">
-        <option value="">Todos os meses</option>
+        <option value="">Todos</option>
       </select>
-      <button class="btn btn-primary" onclick="gerarPDF()">📄 Gerar PDF</button>
+      <button class="btn btn-primary" onclick="gerarPDF()">📄 PDF</button>
     </div>
+    <div id="metrics-wrap" class="metrics-grid"></div>
     <div class="card">
-      <div class="row" style="margin-bottom:14px;gap:8px" id="metrics"></div>
       <div id="tabela-pedidos"></div>
-      <div id="adiantamentos"></div>
+      <div id="extras"></div>
     </div>
   </div>
 </div>
@@ -107,16 +146,22 @@ const firebaseConfig = {
   appId: "1:359027216116:web:af8df148f57e7c3fb398a1"
 };
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const db=firebase.database();
 
 const MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const fmt=v=>'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const ck=(m,a)=>m+'_'+a;
 const ord=c=>{const p=c.split('_');return parseInt(p[1])*100+MS.indexOf(p[0]);};
 
-let vendedor=null, pedidos=[], adiantamentos=[], produtos=[], bonusLista=[];
+let vendedor=null,pedidos=[],adiantamentos=[],produtos=[],bonusLista=[];
 
-// Pega o nome do vendedor da URL: ?v=valdo
+function saudacao(){
+  const h=new Date().getHours();
+  if(h>=5&&h<12)return'Bom dia,';
+  if(h>=12&&h<18)return'Boa tarde,';
+  return'Boa noite,';
+}
+
 const params=new URLSearchParams(window.location.search);
 const nomeUrl=(params.get('v')||'').toLowerCase().trim();
 
@@ -132,10 +177,8 @@ if(!nomeUrl){
     produtos=d.prods||[];
     const vs=d.vs||[];
     vendedor=vs.find(v=>v.nome.toLowerCase()===nomeUrl);
-
     if(!vendedor){mostrarErro();return;}
 
-    // Filtra pedidos únicos desse vendedor em ordem crescente
     const todosPs=d.ps||[];
     const visto={};
     pedidos=todosPs.filter(p=>{
@@ -148,7 +191,7 @@ if(!nomeUrl){
     adiantamentos=(d.ads||[]).filter(a=>a.vid===vendedor.id);
     bonusLista=(d.bonus||[]).filter(b=>b.vid===vendedor.id);
 
-    // Preenche filtro de meses
+    // Preenche filtro
     const ks=[];
     pedidos.forEach(p=>{const c=ck(p.mes,p.ano);if(ks.indexOf(c)<0)ks.push(c);});
     adiantamentos.forEach(a=>{const c=ck(a.mes,a.ano);if(ks.indexOf(c)<0)ks.push(c);});
@@ -156,17 +199,17 @@ if(!nomeUrl){
     ks.sort((x,y)=>ord(y)-ord(x));
     const sel=document.getElementById('f-mes');
     ks.forEach(c=>{const p=c.split('_');const o=document.createElement('option');o.value=c;o.textContent=p[0]+' '+p[1];sel.appendChild(o);});
-
-    // Seleciona mês atual por padrão se existir
     const hoje=new Date();
     const mesAtual=ck(MS[hoje.getMonth()],hoje.getFullYear());
     if(ks.includes(mesAtual))sel.value=mesAtual;
 
+    // Saudação
+    document.getElementById('saudacao').textContent=saudacao();
+    document.getElementById('nome-vend').textContent=vendedor.nome+'!';
+    document.title='Comissões — '+vendedor.nome;
+
     document.getElementById('loading').style.display='none';
     document.getElementById('conteudo').style.display='block';
-    document.getElementById('nome-badge').style.display='block';
-    document.getElementById('nome-badge').textContent=vendedor.nome;
-    document.title='Minhas Comissões — '+vendedor.nome;
     renderConteudo();
   }).catch(()=>mostrarErro());
 }
@@ -178,103 +221,101 @@ function mostrarErro(){
 
 function renderConteudo(){
   const f=document.getElementById('f-mes').value;
-  let mps=pedidos;
-  let mas=adiantamentos;
-  let mbs=bonusLista;
-  if(f){
-    mps=mps.filter(p=>ck(p.mes,p.ano)===f);
-    mas=mas.filter(a=>ck(a.mes,a.ano)===f);
-    mbs=mbs.filter(b=>ck(b.mes,b.ano)===f);
-  }
+  let mps=f?pedidos.filter(p=>ck(p.mes,p.ano)===f):pedidos;
+  let mas=f?adiantamentos.filter(a=>ck(a.mes,a.ano)===f):adiantamentos;
+  let mbs=f?bonusLista.filter(b=>ck(b.mes,b.ano)===f):bonusLista;
 
-  const tc=mps.reduce((s,p)=>{
-    const fator=p.meia?0.5:1;
-    return s+parseFloat((p.val*vendedor.perc/100*fator).toFixed(2));
-  },0);
+  const tc=mps.reduce((s,p)=>s+parseFloat((p.val*vendedor.perc/100*(p.meia?0.5:1)).toFixed(2)),0);
   const tb=mbs.reduce((s,b)=>s+b.val,0);
   const tv=mps.reduce((s,p)=>s+p.val,0);
   const ta=mas.reduce((s,a)=>s+a.val,0);
-  const totalBruto=tc+tb;
-  const tl=totalBruto-ta;
+  const tl=tc+tb-ta;
   const lbl=f?f.replace('_',' '):'todos os meses';
 
-  // Metrics
-  let mh='<div class="metric"><div class="val">'+mps.length+'</div><div class="lbl">Pedidos</div></div>';
-  mh+='<div class="metric"><div class="val">'+fmt(tv)+'</div><div class="lbl">Volume total</div></div>';
-  mh+='<div class="metric azul"><div class="val">'+fmt(tc)+'</div><div class="lbl">Comissão pedidos ('+vendedor.perc+'%)</div></div>';
-  if(tb>0){mh+='<div class="metric" style="background:#EEEDFE"><div class="val" style="color:#534AB7">'+fmt(tb)+'</div><div class="lbl">Bônus números</div></div>';}
-  if(ta>0){mh+='<div class="metric laranja"><div class="val">'+fmt(ta)+'</div><div class="lbl">Adiantamentos</div></div>';}
-  if(tb>0||ta>0){mh+='<div class="metric verde"><div class="val">'+fmt(tl)+'</div><div class="lbl">A receber (líquido)</div></div>';}
-  document.getElementById('metrics').innerHTML=mh;
+  // Métricas
+  let mh='';
+  mh+='<div class="metric"><div class="val">'+mps.length+'</div><div class="lbl">Pedidos</div></div>';
+  mh+='<div class="metric azul"><div class="val">'+fmt(tc)+'</div><div class="lbl">Comissão ('+vendedor.perc+'%)</div></div>';
+  if(tb>0){mh+='<div class="metric roxo" style="background:#F5F3FF"><div class="val" style="color:#534AB7">'+fmt(tb)+'</div><div class="lbl">Bônus números</div></div>';}
+  if(ta>0){mh+='<div class="metric laranja" style="background:#FFF4E0"><div class="val">'+fmt(ta)+'</div><div class="lbl">Adiantamentos</div></div>';}
+  if(tb>0||ta>0){mh+='<div class="metric verde full"><div class="val">'+fmt(tl)+'</div><div class="lbl">💰 A receber (líquido)</div></div>';}
+  document.getElementById('metrics-wrap').innerHTML=mh;
 
-  // Tabela pedidos
+  // Tabela — apenas Nº, Cidade/UF, Valor, Comissão
   let tp='';
-  if(!mps.length){tp='<p class="empty">Nenhum pedido em '+lbl+'.</p>';}
-  else{
-    tp='<h2 style="margin-bottom:10px">Pedidos — '+lbl+'</h2>';
-    tp+='<table><thead><tr><th>Nº</th><th>Mês</th><th>Produto</th><th>Cidade</th><th>UF</th><th style="text-align:right">Valor</th><th style="text-align:right">Comissão</th></tr></thead><tbody>';
+  if(!mps.length){
+    tp='<p class="empty">Nenhum pedido em '+lbl+'.</p>';
+  } else {
+    tp='<div class="tabela-wrap">';
+    tp+='<table><thead><tr>';
+    tp+='<th>Nº</th>';
+    tp+='<th>Cidade / UF</th>';
+    tp+='<th style="text-align:right">Valor</th>';
+    tp+='<th style="text-align:right">Comissão</th>';
+    tp+='</tr></thead><tbody>';
     mps.forEach(p=>{
-      const pn=produtos.find(x=>x.id===p.prod);
       const com=parseFloat((p.val*vendedor.perc/100*(p.meia?0.5:1)).toFixed(2));
-      tp+='<tr><td><strong>'+p.num+'</strong></td>';
-      tp+='<td><span class="badge-m">'+p.mes.substring(0,3)+' '+p.ano+'</span></td>';
-      tp+='<td>'+(pn?'<span class="badge-prod">'+pn.nome+'</span>':'—')+'</td>';
-      tp+='<td>'+p.cid+'</td><td><strong>'+p.uf+'</strong></td>';
-      tp+='<td style="text-align:right">'+fmt(p.val)+'</td>';
-      tp+='<td style="text-align:right;color:#185FA5;font-weight:600">'+fmt(com)+(p.meia?' <span class="badge-meia">½</span>':'')+'</td></tr>';
+      tp+='<tr>';
+      tp+='<td class="num">'+p.num+'</td>';
+      tp+='<td class="cidade">'+p.cid+' <strong>'+p.uf+'</strong></td>';
+      tp+='<td class="val-td">'+fmt(p.val)+'</td>';
+      tp+='<td class="com-td">'+fmt(com)+(p.meia?' <span class="badge-meia">½</span>':'')+'</td>';
+      tp+='</tr>';
     });
-    tp+='<tr class="total-row"><td colspan="5">TOTAL</td><td style="text-align:right">'+fmt(tv)+'</td><td style="text-align:right;color:#185FA5">'+fmt(tc)+'</td></tr>';
-    tp+='</tbody></table>';
+    const totComissao=mps.reduce((s,p)=>s+parseFloat((p.val*vendedor.perc/100*(p.meia?0.5:1)).toFixed(2)),0);
+    tp+='<tr class="total-row"><td colspan="2">Total</td>';
+    tp+='<td class="val-td">'+fmt(tv)+'</td>';
+    tp+='<td class="com-td">'+fmt(totComissao)+'</td>';
+    tp+='</tr></tbody></table></div>';
   }
   document.getElementById('tabela-pedidos').innerHTML=tp;
 
-  // Bônus + Adiantamentos + Líquido
-  let extras='';
+  // Extras: bônus + adiantamentos + resumo
+  let ex='';
+
   if(mbs.length>0){
-    extras+='<div style="margin-top:16px"><h2 style="margin-bottom:10px;color:#534AB7">Bônus por números que entraram</h2>';
-    extras+='<table><thead><tr><th>Mês</th><th>Descrição</th><th style="text-align:center">Qtd nºs</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
+    ex+='<div class="bonus-card">';
+    ex+='<div class="titulo">Bônus por números que entraram</div>';
     mbs.forEach(b=>{
-      extras+='<tr><td><span class="badge-m">'+b.mes.substring(0,3)+' '+b.ano+'</span></td>';
-      extras+='<td>'+b.obs+'</td>';
-      extras+='<td style="text-align:center;font-weight:600">'+b.qtd.toLocaleString('pt-BR')+'</td>';
-      extras+='<td style="text-align:right;color:#534AB7;font-weight:600">'+fmt(b.val)+'</td></tr>';
+      ex+='<div class="item-row">';
+      ex+='<div class="desc">'+b.obs+' <span style="font-size:11px;color:#888">('+b.mes.substring(0,3)+'/'+b.ano+')</span> — '+b.qtd.toLocaleString('pt-BR')+' nºs</div>';
+      ex+='<div class="val roxo">'+fmt(b.val)+'</div>';
+      ex+='</div>';
     });
-    extras+='<tr class="total-row"><td colspan="3">TOTAL BÔNUS</td><td style="text-align:right;color:#534AB7">'+fmt(tb)+'</td></tr>';
-    extras+='</tbody></table></div>';
+    ex+='<div class="item-row"><div class="desc" style="font-weight:700">Total bônus</div><div class="val roxo">'+fmt(tb)+'</div></div>';
+    ex+='</div>';
   }
+
   if(mas.length>0){
-    extras+='<div style="margin-top:16px"><h2 style="margin-bottom:10px;color:#854F0B">Adiantamentos recebidos</h2>';
-    extras+='<table><thead><tr><th>Mês</th><th>Descrição</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
+    ex+='<div class="adt-card">';
+    ex+='<div class="titulo">Adiantamentos recebidos</div>';
     mas.forEach(a=>{
-      extras+='<tr><td><span class="badge-adt">'+a.mes.substring(0,3)+' '+a.ano+'</span></td>';
-      extras+='<td>'+a.obs+'</td>';
-      extras+='<td style="text-align:right;color:#854F0B;font-weight:600">'+fmt(a.val)+'</td></tr>';
+      ex+='<div class="item-row">';
+      ex+='<div class="desc">'+a.obs+' <span style="font-size:11px;color:#888">('+a.mes.substring(0,3)+'/'+a.ano+')</span></div>';
+      ex+='<div class="val laranja">− '+fmt(a.val)+'</div>';
+      ex+='</div>';
     });
-    extras+='<tr class="total-row"><td colspan="2">TOTAL ADIANTADO</td><td style="text-align:right;color:#854F0B">'+fmt(ta)+'</td></tr>';
-    extras+='</tbody></table></div>';
+    ex+='<div class="item-row"><div class="desc" style="font-weight:700">Total adiantado</div><div class="val laranja">− '+fmt(ta)+'</div></div>';
+    ex+='</div>';
   }
+
   if(tb>0||ta>0){
-    extras+='<div class="liquido-box" style="margin-top:14px;display:flex;flex-direction:column;gap:6px">';
-    extras+='<div style="display:flex;justify-content:space-between;font-size:13px;color:#666"><span>Comissão pedidos</span><span>'+fmt(tc)+'</span></div>';
-    if(tb>0){extras+='<div style="display:flex;justify-content:space-between;font-size:13px;color:#534AB7"><span>+ Bônus números</span><span>'+fmt(tb)+'</span></div>';}
-    if(ta>0){extras+='<div style="display:flex;justify-content:space-between;font-size:13px;color:#854F0B"><span>− Adiantamentos</span><span>'+fmt(ta)+'</span></div>';}
-    extras+='<div style="display:flex;justify-content:space-between;border-top:1px solid #c5e0ab;padding-top:8px">';
-    extras+='<span style="font-weight:700;color:#3B6D11">💰 A RECEBER (LÍQUIDO)</span>';
-    extras+='<span style="font-weight:700;color:#3B6D11;font-size:18px">'+fmt(tl)+'</span></div></div>';
+    ex+='<div class="resumo-liq">';
+    ex+='<div class="resumo-linha">Comissão pedidos <span>'+fmt(tc)+'</span></div>';
+    if(tb>0){ex+='<div class="resumo-linha roxo">+ Bônus números <span>'+fmt(tb)+'</span></div>';}
+    if(ta>0){ex+='<div class="resumo-linha laranja">− Adiantamentos <span>'+fmt(ta)+'</span></div>';}
+    ex+='<div class="resumo-total"><span class="label">💰 A RECEBER</span><span class="valor">'+fmt(tl)+'</span></div>';
+    ex+='</div>';
   }
-  document.getElementById('adiantamentos').innerHTML=extras;
+
+  document.getElementById('extras').innerHTML=ex;
 }
 
 function gerarPDF(){
   const f=document.getElementById('f-mes').value;
-  let mps=pedidos;
-  let mas=adiantamentos;
-  let mbs=bonusLista;
-  if(f){
-    mps=mps.filter(p=>ck(p.mes,p.ano)===f);
-    mas=mas.filter(a=>ck(a.mes,a.ano)===f);
-    mbs=mbs.filter(b=>ck(b.mes,b.ano)===f);
-  }
+  let mps=f?pedidos.filter(p=>ck(p.mes,p.ano)===f):pedidos;
+  let mas=f?adiantamentos.filter(a=>ck(a.mes,a.ano)===f):adiantamentos;
+  let mbs=f?bonusLista.filter(b=>ck(b.mes,b.ano)===f):bonusLista;
   const tc=mps.reduce((s,p)=>s+parseFloat((p.val*vendedor.perc/100*(p.meia?0.5:1)).toFixed(2)),0);
   const tb=mbs.reduce((s,b)=>s+b.val,0);
   const tv=mps.reduce((s,p)=>s+p.val,0);
@@ -282,45 +323,35 @@ function gerarPDF(){
   const tl=tc+tb-ta;
   const ref=f?f.replace('_',' '):'Todos os meses';
   const hoje=new Date().toLocaleDateString('pt-BR');
-
   let ln='';
   mps.forEach(p=>{
-    const pn=produtos.find(x=>x.id===p.prod);
     const com=parseFloat((p.val*vendedor.perc/100*(p.meia?0.5:1)).toFixed(2));
-    ln+='<tr><td>'+p.num+'</td><td>'+p.mes.substring(0,3)+'/'+p.ano+'</td>';
-    ln+='<td>'+(pn?pn.nome:'—')+'</td><td>'+p.cid+' — '+p.uf+'</td>';
+    ln+='<tr><td>'+p.num+'</td><td>'+p.cid+' — '+p.uf+'</td>';
     ln+='<td style="text-align:right">'+fmt(p.val)+'</td>';
     ln+='<td style="text-align:right;color:#185FA5;font-weight:600">'+fmt(com)+(p.meia?' (½)':'')+'</td></tr>';
   });
-  ln+='<tr style="background:#eef3fa"><td colspan="4" style="font-weight:700">TOTAL COMISSÃO PEDIDOS</td><td style="text-align:right">'+fmt(tv)+'</td><td style="text-align:right;font-weight:700;color:#185FA5">'+fmt(tc)+'</td></tr>';
-
+  ln+='<tr style="background:#eef3fa;font-weight:700"><td colspan="2">Total</td><td style="text-align:right">'+fmt(tv)+'</td><td style="text-align:right;color:#185FA5">'+fmt(tc)+'</td></tr>';
   let bonusR='';
   if(mbs.length>0){
-    bonusR='<h3 style="margin:20px 0 8px;color:#534AB7;font-size:13px;font-weight:700;text-transform:uppercase">Bônus por números que entraram</h3>';
-    bonusR+='<table><thead><tr><th>Mês</th><th>Descrição</th><th style="text-align:center">Qtd nºs</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
-    mbs.forEach(b=>{bonusR+='<tr><td>'+b.mes.substring(0,3)+'/'+b.ano+'</td><td>'+b.obs+'</td><td style="text-align:center;font-weight:600">'+b.qtd.toLocaleString('pt-BR')+'</td><td style="text-align:right;color:#534AB7;font-weight:600">'+fmt(b.val)+'</td></tr>';});
-    bonusR+='<tr style="background:#EEEDFE"><td colspan="3" style="font-weight:700;color:#534AB7">TOTAL BÔNUS</td><td style="text-align:right;font-weight:700;color:#534AB7">'+fmt(tb)+'</td></tr>';
-    bonusR+='</tbody></table>';
+    bonusR='<h3 style="margin:20px 0 8px;color:#534AB7;font-size:13px;font-weight:700;text-transform:uppercase">Bônus por números</h3>';
+    bonusR+='<table><thead><tr><th>Mês</th><th>Descrição</th><th style="text-align:center">Qtd</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
+    mbs.forEach(b=>{bonusR+='<tr><td>'+b.mes.substring(0,3)+'/'+b.ano+'</td><td>'+b.obs+'</td><td style="text-align:center">'+b.qtd.toLocaleString('pt-BR')+'</td><td style="text-align:right;color:#534AB7;font-weight:600">'+fmt(b.val)+'</td></tr>';});
+    bonusR+='<tr style="background:#EEEDFE"><td colspan="3" style="font-weight:700;color:#534AB7">Total bônus</td><td style="text-align:right;font-weight:700;color:#534AB7">'+fmt(tb)+'</td></tr></tbody></table>';
   }
-
   let adtR='';
   if(mas.length>0){
-    adtR='<h3 style="margin:20px 0 8px;color:#854F0B;font-size:13px;font-weight:700;text-transform:uppercase">Adiantamentos recebidos</h3>';
+    adtR='<h3 style="margin:20px 0 8px;color:#854F0B;font-size:13px;font-weight:700;text-transform:uppercase">Adiantamentos</h3>';
     adtR+='<table><thead><tr><th colspan="5">Descrição</th><th style="text-align:right">Valor</th></tr></thead><tbody>';
     mas.forEach(a=>{adtR+='<tr><td colspan="5">'+a.obs+' ('+a.mes.substring(0,3)+'/'+a.ano+')</td><td style="text-align:right;color:#854F0B;font-weight:600">− '+fmt(a.val)+'</td></tr>';});
-    adtR+='<tr style="background:#FAEEDA"><td colspan="5" style="font-weight:700;color:#854F0B">TOTAL ADIANTADO</td><td style="text-align:right;font-weight:700;color:#854F0B">− '+fmt(ta)+'</td></tr>';
-    adtR+='</tbody></table>';
+    adtR+='<tr style="background:#FAEEDA"><td colspan="5" style="font-weight:700;color:#854F0B">Total adiantado</td><td style="text-align:right;font-weight:700;color:#854F0B">− '+fmt(ta)+'</td></tr></tbody></table>';
   }
-
-  const resumo=(tb>0||ta>0)?'<div style="background:#EAF3DE;border-radius:8px;padding:14px 18px;margin-top:20px">'
-    +'<table style="margin:0"><tbody>'
+  const resumo=(tb>0||ta>0)?'<div style="background:#EAF3DE;border-radius:8px;padding:14px 18px;margin-top:20px"><table style="margin:0"><tbody>'
     +'<tr><td style="border:none;padding:4px 0;color:#666">Comissão pedidos</td><td style="text-align:right;border:none;padding:4px 0;font-weight:600">'+fmt(tc)+'</td></tr>'
     +(tb>0?'<tr><td style="border:none;padding:4px 0;color:#534AB7">+ Bônus números</td><td style="text-align:right;border:none;padding:4px 0;font-weight:600;color:#534AB7">'+fmt(tb)+'</td></tr>':'')
     +(ta>0?'<tr><td style="border:none;padding:4px 0;color:#854F0B">− Adiantamentos</td><td style="text-align:right;border:none;padding:4px 0;font-weight:600;color:#854F0B">'+fmt(ta)+'</td></tr>':'')
-    +'<tr style="border-top:1px solid #c5e0ab"><td style="font-weight:700;color:#3B6D11;font-size:14px;border:none;padding:10px 0 4px">💰 A RECEBER (LÍQUIDO)</td>'
+    +'<tr style="border-top:1px solid #c5e0ab"><td style="font-weight:700;color:#3B6D11;font-size:14px;border:none;padding:10px 0 4px">💰 A RECEBER</td>'
     +'<td style="text-align:right;font-weight:700;color:#3B6D11;font-size:18px;border:none;padding:10px 0 4px">'+fmt(tl)+'</td></tr>'
     +'</tbody></table></div>':'';
-
   const w=window.open('','_blank');
   w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Comissões '+vendedor.nome+'</title>'
     +'<style>@media print{.btnp{display:none}}body{font-family:Arial;padding:32px;color:#222;max-width:780px;margin:auto}'
@@ -338,14 +369,13 @@ function gerarPDF(){
     +'<h1>AÇO NAVAL</h1><h2>Relatório de Comissões — '+vendedor.nome+'</h2>'
     +'<div class="s">Referência: '+ref+' &nbsp;|&nbsp; Comissão: '+vendedor.perc+'% &nbsp;|&nbsp; Gerado em: '+hoje+'</div><hr>'
     +'<div class="rs">'
-    +'<div class="bx"><div class="v">'+mps.length+'</div><div class="l" style="color:#888">Pedidos</div></div>'
-    +'<div class="bx"><div class="v" style="color:#185FA5">'+fmt(tc)+'</div><div class="l" style="color:#888">Comissão pedidos</div></div>'
-    +(tb>0?'<div class="bx"><div class="v" style="color:#534AB7">'+fmt(tb)+'</div><div class="l" style="color:#888">Bônus números</div></div>':'')
-    +(ta>0?'<div class="bx"><div class="v" style="color:#854F0B">'+fmt(ta)+'</div><div class="l" style="color:#888">Adiantamentos</div></div>':'')
-    +'<div class="bx" style="border-left:3px solid #3B6D11"><div class="v" style="color:#3B6D11">'+fmt(tl)+'</div><div class="l" style="color:#888">A receber</div></div>'
+    +'<div class="bx"><div class="v">'+mps.length+'</div><div class="l">Pedidos</div></div>'
+    +'<div class="bx"><div class="v" style="color:#185FA5">'+fmt(tc)+'</div><div class="l">Comissão</div></div>'
+    +(tb>0?'<div class="bx"><div class="v" style="color:#534AB7">'+fmt(tb)+'</div><div class="l">Bônus</div></div>':'')
+    +(ta>0?'<div class="bx"><div class="v" style="color:#854F0B">'+fmt(ta)+'</div><div class="l">Adiantamentos</div></div>':'')
+    +'<div class="bx" style="border-left:3px solid #3B6D11"><div class="v" style="color:#3B6D11">'+fmt(tl)+'</div><div class="l">A receber</div></div>'
     +'</div>'
-    +'<h3 style="margin:0 0 6px;color:#003366;font-size:13px;font-weight:700;text-transform:uppercase">Pedidos</h3>'
-    +'<table><thead><tr><th>Nº</th><th>Mês</th><th>Produto</th><th>Cidade / UF</th><th style="text-align:right">Valor</th><th style="text-align:right">Comissão</th></tr></thead>'
+    +'<table><thead><tr><th>Nº</th><th>Cidade / UF</th><th style="text-align:right">Valor</th><th style="text-align:right">Comissão</th></tr></thead>'
     +'<tbody>'+ln+'</tbody></table>'
     +bonusR+adtR+resumo
     +'<div class="rd">Documento gerado automaticamente — Aço Naval</div></body></html>');
