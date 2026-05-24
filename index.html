@@ -180,8 +180,9 @@ textarea{font-family:inherit}
   .tab{white-space:nowrap;flex-shrink:0;font-size:13px;padding:8px 14px}
 
   /* ── Tabelas — scroll horizontal ── */
-  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px}
-  table{min-width:480px;font-size:12px}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{font-size:12px}
+  table:not(.card-table):not(.card-table-sm){min-width:400px}
   th,td{padding:8px 10px}
 
   /* ── Métricas — 2 por linha ── */
@@ -268,6 +269,75 @@ textarea{font-family:inherit}
   .kpi-val{font-size:18px}
   .dash-rank-name{width:70px}
   .dash-rank-val{width:80px;font-size:11px}
+}
+
+
+/* ===== TABELAS MOBILE — CARD STYLE ===== */
+@media(max-width:768px){
+  .card-table{min-width:0!important;width:100%}
+  .card-table thead{display:none}
+  .card-table tbody tr{
+    display:block;
+    background:#fff;
+    border:1px solid #e0e4e8;
+    border-radius:10px;
+    margin-bottom:10px;
+    overflow:hidden;
+  }
+  .card-table tbody tr.total-row{
+    background:#003366!important;
+    border-color:#003366;
+  }
+  .card-table tbody tr.total-row td{
+    color:#fff!important;
+    font-weight:700;
+    justify-content:space-between;
+    border-bottom:none;
+  }
+  .card-table tbody tr.total-row td::before{color:#aac4e8!important}
+  .card-table td{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:9px 14px;
+    border-bottom:1px solid #f5f7fa;
+    font-size:13px;
+    min-height:36px;
+    gap:8px;
+  }
+  .card-table td:last-child{border-bottom:none}
+  .card-table td::before{
+    content:attr(data-label);
+    font-size:10px;
+    font-weight:700;
+    color:#888;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    flex-shrink:0;
+    min-width:70px;
+  }
+  .card-table td[data-label=""]::before{display:none;min-width:0}
+  .card-table td[data-label=""] {justify-content:flex-end}
+  /* Entregas — status select full width */
+  .card-table .status-sel{width:100%;margin-top:0}
+  /* Oculta colunas menos importantes no card */
+  .card-table td[data-label="UF"]{display:none}
+  /* Linha de separação de grupo (entregas) */
+  .card-table tr[style*="background:#f0f2f5"] td,
+  .card-table tr[style*="background:#FFF4E0"] td,
+  .card-table tr[style*="background:#EAF3DE"] td{
+    font-weight:700;font-size:11px;letter-spacing:.3px;
+  }
+  /* Tabelas simples (vendas, config) */
+  .card-table-sm thead{display:none}
+  .card-table-sm{min-width:0!important;width:100%}
+  .card-table-sm tbody tr{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 14px;border-bottom:1px solid #f0f2f5;font-size:13px;
+  }
+  .card-table-sm tbody tr:last-child{border-bottom:none}
+  /* Wrapper sem scroll forçado quando usa card-table */
+  .table-wrap:has(.card-table){overflow-x:visible;margin:0;padding:0}
 }
 
 </style>
@@ -805,6 +875,7 @@ function renderProd(){
     h+='<td style="text-align:right"><button class="del" onclick="delProd('+p.id+')">✕</button></td></tr>';
   });
   el.innerHTML=h+'</tbody></table>';
+  applyCardLabels('lista-prod','sm');
 }
 function renderSelProd(){
   let h='<option value="">Selecione...</option>';
@@ -846,6 +917,7 @@ function renderV(){
     h+='<button class="del" onclick="delV('+v.id+')">✕</button></td></tr>';
   });
   el.innerHTML=h+'</tbody></table>';
+  applyCardLabels('lista-v','sm');
 }
 
 function editarVendedor(id){
@@ -1382,6 +1454,7 @@ function renderRel(){
     h+='<span style="font-size:22px;font-weight:700;color:#3B6D11">'+fmt(tl)+'</span></div></div>';
   }
   el.innerHTML=h+'</div>';
+  applyCardLabels('rel');
 }
 
 /* ========== VENDAS MENSAIS ========== */
@@ -1406,6 +1479,7 @@ function renderVen(){
       h+='<td style="text-align:right;color:#185FA5;font-weight:600">'+fmt(m.t)+'</td></tr>';
     });
     rM.innerHTML=h+'</tbody></table>';
+    applyCardLabels('r-mes','sm');
     let b='';
     ls.forEach(m=>{const w=Math.round((m.t/mx)*100);const ativo=f===ck(m.mes,m.ano);
       b+='<div class="bar-row"><div class="bar-label">'+m.mes.substring(0,3)+' '+m.ano+'</div>';
@@ -1432,6 +1506,7 @@ function renderVen(){
       h+='<div class="bar-val">'+fmt(d.t)+'</div></div>';
     });
     rP.innerHTML=h;
+    applyCardLabels('r-prod','sm');
   }
 
   // Por estado
@@ -1451,6 +1526,7 @@ function renderVen(){
       h+='<div class="bar-val">'+fmt(d.t)+'</div></div>';
     });
     rU.innerHTML=h;
+    applyCardLabels('r-uf','sm');
   }
 
   // Anúncios
@@ -1471,6 +1547,7 @@ function renderVen(){
       cp+='<td style="text-align:right" class="'+cl+'">'+s+' '+(dp>=0?'+':'')+dp.toFixed(1)+'%</td></tr>';
     }
     cM.innerHTML=cp+'</tbody></table>';
+    applyCardLabels('comp');
   }
 }
 
@@ -1761,6 +1838,7 @@ function renderEntregas(){
   h+='<tr style="background:#003366"><td colspan="5" style="color:#fff;font-weight:700;font-size:12px;letter-spacing:0.3px">TOTAL'+(fSt?' — '+STATUS_LABEL[fSt]:'')+'</td>'
     +'<td style="text-align:right;color:#fff;font-weight:700">'+fmt(tvTotal)+'</td><td></td></tr>';
   el.innerHTML=h+'</tbody></table>';
+  applyCardLabels('tabela-entregas');
 }
 
 /* ========== PDF ENTREGAS ========== */
@@ -1858,6 +1936,26 @@ function limparTudo(){
   ['vs','ps','ads','prods','anus','sts'].forEach(k=>localStorage.removeItem('an_'+k));
   renderV();renderSel();renderTabs();renderF();renderProd();renderSelProd();
   alert('Dados apagados.');
+}
+
+
+/* ===== HELPER — CARD LABELS ===== */
+function applyCardLabels(containerId, mode){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  el.querySelectorAll('table').forEach(tbl=>{
+    if(mode==='sm'){tbl.classList.add('card-table-sm');return;}
+    tbl.classList.add('card-table');
+    tbl.style.minWidth='0';
+    const headers=[...tbl.querySelectorAll('thead th')].map(th=>th.textContent.trim());
+    tbl.querySelectorAll('tbody tr').forEach(tr=>{
+      [...tr.querySelectorAll('td')].forEach((td,i)=>{
+        // Não aplica label em células com colspan (linhas de total/grupo)
+        if(!td.colSpan||td.colSpan===1) td.setAttribute('data-label',headers[i]||'');
+        else td.setAttribute('data-label','');
+      });
+    });
+  });
 }
 
 
@@ -2061,6 +2159,7 @@ function renderPedidos(){
   </tr>`;
 
   el.innerHTML=h+'</tbody></table></div>';
+  applyCardLabels('lista-pedidos-gestao');
 }
 
 
