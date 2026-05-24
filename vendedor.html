@@ -186,7 +186,7 @@ if(!nomeUrl){
       if(visto[p.gid])return false;
       visto[p.gid]=true;
       return true;
-    }).sort((a,b)=>parseInt(a.num)-parseInt(b.num));
+    }).sort((a,b)=>parseInt(b.num)-parseInt(a.num));
 
     adiantamentos=(d.ads||[]).filter(a=>a.vid===vendedor.id);
     bonusLista=(d.bonus||[]).filter(b=>b.vid===vendedor.id);
