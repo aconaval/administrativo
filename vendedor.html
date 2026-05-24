@@ -151,6 +151,13 @@ const db=firebase.database();
 const MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const fmt=v=>'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const ck=(m,a)=>m+'_'+a;
+const MS_NORM=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function normalizarPedidos(lista){
+  return (lista||[]).map(p=>{
+    if(typeof p.mes==='number'){return Object.assign({},p,{mes:MS_NORM[p.mes-1]||String(p.mes)});}
+    return p;
+  });
+}
 const ord=c=>{const p=c.split('_');return parseInt(p[1])*100+MS.indexOf(p[0]);};
 
 let vendedor=null,pedidos=[],adiantamentos=[],produtos=[],bonusLista=[];
@@ -179,17 +186,17 @@ if(!nomeUrl){
     vendedor=vs.find(v=>v.nome.toLowerCase()===nomeUrl);
     if(!vendedor){mostrarErro();return;}
 
-    const todosPs=d.ps||[];
+    const todosPs=normalizarPedidos(d.ps||[]);
     const visto={};
     pedidos=todosPs.filter(p=>{
-      if(p.vid!==vendedor.id)return false;
+      if(String(p.vid)!==String(vendedor.id))return false;
       if(visto[p.gid])return false;
       visto[p.gid]=true;
       return true;
     }).sort((a,b)=>parseInt(b.num)-parseInt(a.num));
 
-    adiantamentos=(d.ads||[]).filter(a=>a.vid===vendedor.id);
-    bonusLista=(d.bonus||[]).filter(b=>b.vid===vendedor.id);
+    adiantamentos=(d.ads||[]).filter(a=>String(a.vid)===String(vendedor.id));
+    bonusLista=(d.bonus||[]).filter(b=>String(b.vid)===String(vendedor.id));
 
     // Preenche filtro
     const ks=[];
