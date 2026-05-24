@@ -637,6 +637,40 @@ textarea{font-family:inherit}
     </div>
   </div>
 </div>
+  <!-- PAINEL EDITAR VENDEDOR -->
+  <div id="ev-overlay" onclick="fecharEditVendedor()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300"></div>
+  <div id="ev-panel" style="
+    display:none;position:fixed;bottom:0;left:0;right:0;z-index:301;
+    background:#fff;border-radius:16px 16px 0 0;
+    padding:24px 20px 36px;
+    box-shadow:0 -6px 32px rgba(0,0,0,.18);
+    transform:translateY(100%);transition:transform .3s ease;
+  ">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div>
+        <div style="font-size:17px;font-weight:700;color:#003366">✏️ Editar Vendedor</div>
+        <div id="ev-nome" style="font-size:13px;color:#888;margin-top:2px"></div>
+      </div>
+      <button onclick="fecharEditVendedor()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;padding:4px 8px;border-radius:6px">✕</button>
+    </div>
+    <input type="hidden" id="ev-id"/>
+    <div class="row" style="margin-bottom:0">
+      <div class="field">
+        <div class="label">Comissão (%)</div>
+        <input type="number" id="ev-perc" step="0.1" min="0" placeholder="Ex: 1.5"/>
+      </div>
+      <div class="field">
+        <div class="label">Bônus por nº (R$) — 0 para desativar</div>
+        <input type="number" id="ev-bonus" step="0.01" min="0" placeholder="Ex: 0,50"/>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn btn-primary" style="flex:1;font-size:15px;padding:12px" onclick="salvarEditVendedor()">✅ Salvar</button>
+      <button class="btn btn-danger" style="flex:1;font-size:15px;padding:12px" onclick="fecharEditVendedor()">Cancelar</button>
+    </div>
+  </div>
+
+
   <!-- PAINEL DE EDIÇÃO DE PEDIDO -->
   <div id="ped-overlay" onclick="fecharEditPedido()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;"></div>
   <div id="ped-panel" style="
@@ -943,16 +977,34 @@ function renderV(){
 
 function editarVendedor(id){
   const v=vs.find(x=>x.id===id);if(!v)return;
-  const novoPerc=prompt('Comissão (%) atual: '+v.perc+'%\nNovo valor:',v.perc);
-  if(novoPerc===null)return;
-  const novoBonus=prompt('Bônus por nº (R$) atual: R$'+(v.bonus||0)+'\nNovo valor (0 para sem bônus):',v.bonus||0);
-  if(novoBonus===null)return;
-  const pc=parseFloat(novoPerc);
-  const bn=parseFloat(novoBonus)||0;
+  document.getElementById('ev-id').value=id;
+  document.getElementById('ev-nome').textContent=v.nome;
+  document.getElementById('ev-perc').value=v.perc;
+  document.getElementById('ev-bonus').value=v.bonus||'';
+  const overlay=document.getElementById('ev-overlay');
+  const panel=document.getElementById('ev-panel');
+  overlay.style.display='block';
+  panel.style.display='block';
+  requestAnimationFrame(()=>panel.style.transform='translateY(0)');
+  setTimeout(()=>document.getElementById('ev-perc').focus(),350);
+}
+function fecharEditVendedor(){
+  const panel=document.getElementById('ev-panel');
+  panel.style.transform='translateY(100%)';
+  setTimeout(()=>{
+    panel.style.display='none';
+    document.getElementById('ev-overlay').style.display='none';
+  },300);
+}
+function salvarEditVendedor(){
+  const id=parseInt(document.getElementById('ev-id').value);
+  const pc=parseFloat(document.getElementById('ev-perc').value);
+  const bn=parseFloat(document.getElementById('ev-bonus').value)||0;
   if(isNaN(pc)||pc<=0){alert('Percentual inválido.');return;}
+  const v=vs.find(x=>x.id===id);if(!v)return;
   v.perc=pc;v.bonus=bn;
   salvar();renderV();renderRel();
-  alert('Vendedor atualizado!');
+  fecharEditVendedor();
 }
 
 function renderLinksVendedores(){
