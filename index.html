@@ -450,6 +450,14 @@ textarea{font-family:inherit}
 <script>
 const MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const CORES=['c0','c1','c2','c3','c4','c5'];
+
+/* Normaliza o campo mes: se vier como número (bug de integração com assinar.html), converte para nome */
+function normalizarPedidos(lista){
+  return (lista||[]).map(p=>{
+    if(typeof p.mes==='number'){return Object.assign({},p,{mes:MS[p.mes-1]||String(p.mes)});}
+    return p;
+  });
+}
 const HEXCORES=['#185FA5','#3B6D11','#BA7517','#D85A30','#7F77DD','#1D9E75'];
 let vs=[],ps=[],ads=[],prods=[],anus=[],sts={},bonus=[],sols=[],ta=null;
 
@@ -519,7 +527,7 @@ function carregar() {
       const d = snap.val();
       if (d) {
         vs = d.vs || [];
-        ps = d.ps || [];
+        ps = normalizarPedidos(d.ps);
         ads = d.ads || [];
         prods = d.prods || [];
         anus = d.anus || [];
@@ -565,7 +573,7 @@ function carregar() {
     const d = snap.val();
     if (!d) return;
     vs = d.vs || [];
-    ps = d.ps || [];
+    ps = normalizarPedidos(d.ps);
     ads = d.ads || [];
     prods = d.prods || [];
     anus = d.anus || [];
@@ -1618,7 +1626,7 @@ function importarBackup(e){
   r.onload=ev=>{try{
     const d=JSON.parse(ev.target.result);
     if(!confirm('Substituir dados atuais?'))return;
-    vs=d.vs||d.vendedores||[];ps=d.ps||d.pedidos||[];
+    vs=d.vs||d.vendedores||[];ps=normalizarPedidos(d.ps||d.pedidos);
     ads=d.ads||d.adiantamentos||[];prods=d.prods||d.produtos||[];
     anus=d.anus||d.anuncios||[];sts=d.sts||{};bonus=d.bonus||[];sols=d.sols||[];
     salvar();renderV();renderSel();renderTabs();renderF();renderProd();renderSelProd();
