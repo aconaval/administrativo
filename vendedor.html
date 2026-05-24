@@ -261,7 +261,7 @@ function renderConteudo(){
     topoDiv.style.display='block';
     topoLbl.textContent=f?'Vendas — '+f.replace('_',' '):'Vendas — todos os meses';
     topoVal.textContent=fmt(tv);
-    topoSub.textContent=mps.length+' pedido'+(mps.length!==1?'s':'')+(mps.length>0?' · ticket médio '+fmt(tv/mps.length):'');
+    topoSub.textContent='';
   }
 
   // Tabela — apenas Nº, Cidade/UF, Valor, Comissão
