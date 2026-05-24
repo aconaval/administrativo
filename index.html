@@ -450,7 +450,7 @@ textarea{font-family:inherit}
     </div>
 
     <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
         <h2 style="margin:0">Pedidos lançados</h2>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
           <select id="ped-f-mes" onchange="renderPedidos()" style="width:auto;padding:6px 10px;font-size:13px">
@@ -460,6 +460,16 @@ textarea{font-family:inherit}
             <option value="">Todos os produtos</option>
           </select>
         </div>
+      </div>
+      <div style="position:relative;margin-bottom:14px">
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none">🔍</span>
+        <input type="text" id="ped-busca"
+          placeholder="Buscar por nº do pedido ou cidade..."
+          oninput="renderPedidos()"
+          style="width:100%;padding:10px 14px 10px 38px;border:1px solid #d0d4d8;border-radius:8px;font-size:14px;background:#fafbfc"
+          autocomplete="off"/>
+        <button id="ped-busca-clear" onclick="document.getElementById('ped-busca').value='';renderPedidos()"
+          style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:16px;cursor:pointer;color:#aaa;padding:2px 6px">✕</button>
       </div>
       <div id="lista-pedidos-gestao"><p class="empty">Nenhum pedido lançado.</p></div>
     </div>
@@ -529,6 +539,17 @@ textarea{font-family:inherit}
       <div class="metric" style="border-left:3px solid #d0d4d8"><div class="val" id="ec-ag" style="color:#666">—</div><div class="lbl">⏳ Aguardando</div></div>
       <div class="metric" style="border-left:3px solid #EF9F27"><div class="val" id="ec-rt" style="color:#BA7517">—</div><div class="lbl">🚚 Em rota</div></div>
       <div class="metric" style="border-left:3px solid #63b922"><div class="val" id="ec-en" style="color:#3B6D11">—</div><div class="lbl">✅ Entregue</div></div>
+    </div>
+
+    <div style="position:relative;margin-bottom:10px">
+      <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none">🔍</span>
+      <input type="text" id="ent-busca"
+        placeholder="Buscar por nº do pedido ou cidade..."
+        oninput="renderEntregas()"
+        style="width:100%;padding:10px 14px 10px 38px;border:1px solid #d0d4d8;border-radius:8px;font-size:14px;background:#fafbfc"
+        autocomplete="off"/>
+      <button id="ent-busca-clear" onclick="document.getElementById('ent-busca').value='';renderEntregas()"
+        style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:16px;cursor:pointer;color:#aaa;padding:2px 6px">✕</button>
     </div>
 
     <div class="card" style="padding:0;overflow:hidden">
@@ -1781,8 +1802,16 @@ function renderEntregas(){
   document.getElementById('ec-en').textContent=nEn;
 
   const el=document.getElementById('tabela-entregas');
+  const busca=(document.getElementById('ent-busca')?document.getElementById('ent-busca').value:'').trim().toLowerCase();
+  const clearBtn=document.getElementById('ent-busca-clear');
+  if(clearBtn)clearBtn.style.display=busca?'block':'none';
+
   let lista=uniqFiltrado;
   if(fSt)lista=lista.filter(p=>getSt(p.gid)===fSt);
+  if(busca)lista=lista.filter(p=>
+    String(p.num).includes(busca)||
+    (p.cid||'').toLowerCase().includes(busca)
+  );
 
   // ordenar: aguardando → em_rota → entregue, depois por número crescente dentro de cada grupo
   lista.sort((a,b)=>{
@@ -2120,15 +2149,23 @@ function renderPedidos(){
   const fMes=document.getElementById('ped-f-mes')?document.getElementById('ped-f-mes').value:'';
   const fProd=document.getElementById('ped-f-prod')?document.getElementById('ped-f-prod').value:'';
 
+  const busca=(document.getElementById('ped-busca')?document.getElementById('ped-busca').value:'').trim().toLowerCase();
+  const clearBtn=document.getElementById('ped-busca-clear');
+  if(clearBtn)clearBtn.style.display=busca?'block':'none';
+
   let lista=uniquePedidos(ps);
   if(fMes)lista=lista.filter(p=>ck(p.mes,p.ano)===fMes);
   if(fProd)lista=lista.filter(p=>String(p.prod)===fProd);
+  if(busca)lista=lista.filter(p=>
+    String(p.num).includes(busca)||
+    (p.cid||'').toLowerCase().includes(busca)
+  );
   lista=lista.slice().sort((a,b)=>{
     const od=ord(ck(b.mes,b.ano))-ord(ck(a.mes,a.ano));
     return od!==0?od:parseInt(b.num)-parseInt(a.num);
   });
 
-  if(!lista.length){el.innerHTML='<p class="empty">Nenhum pedido encontrado.</p>';return;}
+  if(!lista.length){el.innerHTML=`<p class="empty">${busca?'Nenhum pedido encontrado para "'+busca+'"':'Nenhum pedido encontrado.'}</p>`;return;}
 
   const tvol=lista.reduce((s,p)=>s+p.val,0);
   let h='<div class="table-wrap"><table><thead><tr>'
