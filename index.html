@@ -36,6 +36,8 @@ h1{color:#003366;font-size:22px;margin-bottom:6px}
 .nav{display:flex;gap:6px;margin-bottom:20px;border-bottom:1px solid #e0e4e8;padding-bottom:10px;flex-wrap:wrap}
 .nav-tab{padding:8px 18px;border-radius:8px;font-size:14px;cursor:pointer;border:1px solid transparent;color:#666;background:none}
 .nav-tab.active{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:600}
+.nav-ico{display:none}
+.nav-lbl{display:inline}
 .page{display:none}.page.active{display:block}
 .card{background:#fff;border:1px solid #e0e4e8;border-radius:10px;padding:16px 20px;margin-bottom:16px}
 .label{font-size:12px;color:#666;margin-bottom:4px;font-weight:500}
@@ -117,83 +119,118 @@ textarea{font-family:inherit}
 .ent-table tr.rt td{background:#FFFDF5}
 .ent-table tr.en td{background:#FAFFFE;opacity:0.75}
 @media(max-width:768px){
-  body{padding:0}
-  .container{border-radius:0;box-shadow:none;padding:0;margin:0}
-  h1{font-size:18px}
+  /* ── Base ── */
+  body{padding:0;padding-bottom:70px}
+  .container{border-radius:0;box-shadow:none;padding:0;margin:0;max-width:100%}
+  h1{font-size:17px}
   .subtitle{display:none}
 
-  /* Header mês */
-  .header-mes{border-radius:0;padding:10px 14px;gap:8px}
-  .header-mes .lbl{font-size:11px;width:100%}
-  .header-mes select{flex:1;font-size:13px}
-  .header-mes input{width:80px!important;font-size:13px}
-  #ref-badge{display:none}
+  /* ── Header mês — linha única compacta ── */
+  .header-mes{border-radius:0;padding:8px 14px;gap:6px;border-bottom:1px solid #dde3ea;background:#E6F1FB}
+  .header-mes .lbl{display:none}
+  .header-mes select{flex:1;font-size:14px;padding:7px 8px;border-radius:6px;min-width:0}
+  .header-mes input{width:74px!important;font-size:14px;padding:7px 8px;border-radius:6px}
+  #ref-badge{display:block;font-size:12px;font-weight:700;color:#0C447C;margin-left:4px;white-space:nowrap}
 
-  /* Nav — scroll horizontal */
-  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:10px 14px 0;margin-bottom:0;border-bottom:none;gap:4px;background:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.06)}
+  /* ── Nav — barra inferior fixa tipo app ── */
+  .nav{
+    position:fixed;bottom:0;left:0;right:0;z-index:200;
+    display:flex;flex-wrap:nowrap;overflow-x:auto;
+    background:#fff;border-top:1px solid #e0e4e8;
+    padding:0;margin:0;gap:0;
+    box-shadow:0 -2px 12px rgba(0,0,0,.08);
+    -webkit-overflow-scrolling:touch;
+  }
   .nav::-webkit-scrollbar{display:none}
-  .nav-tab{white-space:nowrap;padding:8px 14px;font-size:13px;flex-shrink:0;border-radius:6px 6px 0 0;border-bottom:2px solid transparent}
-  .nav-tab.active{border-bottom-color:#185FA5;background:#E6F1FB}
+  .nav-tab{
+    flex:1;min-width:60px;flex-shrink:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:8px 4px 6px;
+    font-size:10px;font-weight:500;color:#888;
+    border:none;border-top:2px solid transparent;
+    border-radius:0;background:none;
+    white-space:nowrap;cursor:pointer;
+    transition:color .15s,border-color .15s,background .15s;
+    line-height:1.2;
+  }
+  .nav-tab.active{color:#185FA5;border-top-color:#185FA5;background:#F0F6FF;font-weight:700}
+  .nav-tab:active{background:#E6F1FB}
+  .nav-ico{display:block;font-size:18px;margin-bottom:2px;line-height:1}
+  .nav-lbl{display:block;font-size:10px}
 
-  /* Páginas */
-  .page{padding:14px}
+  /* ── Páginas ── */
+  .page{padding:12px 14px 16px}
 
-  /* Cards */
-  .card{padding:12px 14px;border-radius:8px;margin-bottom:12px}
+  /* ── Cards ── */
+  .card{padding:12px 14px;border-radius:10px;margin-bottom:10px}
 
-  /* Rows e fields — empilhar verticalmente */
+  /* ── Rows e fields — empilhar verticalmente ── */
   .row{flex-direction:column;gap:8px}
   .field{min-width:100%;flex:none}
+  input[type=text],input[type=number],select{font-size:16px;padding:10px 12px}
 
-  /* Botões — largura total exceto inline */
-  .btn{width:100%;justify-content:center;padding:10px 14px;font-size:14px}
+  /* ── Botões ── */
+  .btn{width:100%;justify-content:center;padding:11px 14px;font-size:15px;border-radius:8px}
   .btn.inline{width:auto}
   .del{width:auto}
 
-  /* Tabs de vendedor */
+  /* ── Tabs de vendedor ── */
   .tab-bar{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
   .tab-bar::-webkit-scrollbar{display:none}
-  .tab{white-space:nowrap;flex-shrink:0}
+  .tab{white-space:nowrap;flex-shrink:0;font-size:13px;padding:8px 14px}
 
-  /* Tabelas — scroll horizontal */
+  /* ── Tabelas — scroll horizontal ── */
   .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px}
-  table{min-width:520px;font-size:12px}
+  table{min-width:480px;font-size:12px}
   th,td{padding:8px 10px}
 
-  /* Métricas — 2 por linha */
+  /* ── Métricas — 2 por linha ── */
   .metric{min-width:calc(50% - 5px);flex:1}
   .metric .val{font-size:16px}
 
-  /* Barras */
+  /* ── Barras ── */
   .bar-label{width:70px;font-size:11px}
   .bar-val{width:90px;font-size:11px}
 
-  /* Header mês de referência no topo da página */
+  /* ── Títulos ── */
   h2{font-size:15px}
   h3{font-size:13px}
 
-  /* Solicitações */
+  /* ── Solicitações ── */
   .sol-card{padding:12px}
-  textarea{font-size:14px}
+  textarea{font-size:16px}
 
-  /* Save info */
-  .save-info{bottom:70px;font-size:11px;padding:6px 12px}
+  /* ── Save info ── */
+  .save-info{bottom:80px;font-size:11px;padding:6px 12px}
 
-  /* Status sel nas entregas */
-  .status-sel{font-size:12px;width:100%;margin-top:4px}
+  /* ── Entregas ── */
+  .status-sel{font-size:14px;width:100%;margin-top:6px;padding:8px 10px}
+  .ent-table{min-width:0!important}
   .ent-table td,.ent-table th{padding:8px 10px;font-size:12px}
 
-  /* Check row */
-  .check-row{font-size:14px}
+  /* ── Filtros em linha ── */
+  .filtros-inline{flex-direction:column;gap:8px}
+  .filtros-inline select,.filtros-inline button{width:100%;font-size:15px;padding:10px 12px}
 
-  /* Anuncios */
+  /* ── Check row ── */
+  .check-row{font-size:14px}
+  .check-row input[type=checkbox]{width:20px;height:20px}
+
+  /* ── Anuncios ── */
   .anuncio-row{flex-direction:column;align-items:flex-start;gap:6px}
-  .anuncio-input{width:100%}
+  .anuncio-input{width:100%;font-size:16px;padding:10px 12px}
   .anuncio-pct{width:100%;text-align:left}
 
-  /* Filtros inline */
-  .filtros-inline{flex-direction:column;gap:8px}
-  .filtros-inline select,.filtros-inline button{width:100%}
+  /* ── Dashboard mobile ── */
+  .dash-grid{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+  .kpi{padding:14px 14px}
+  .kpi-val{font-size:17px}
+  .kpi-icon{font-size:18px}
+  .dash-row,.dash-row.three{grid-template-columns:1fr;gap:10px}
+  .dash-card{padding:14px 14px}
+  .dash-rank-name{width:80px;font-size:12px}
+  .dash-rank-val{width:90px;font-size:11px}
+  .dash-alert{font-size:12px;padding:9px 12px}
 }
 
 
@@ -252,12 +289,13 @@ textarea{font-family:inherit}
   </div>
 
   <div class="nav">
-    <div class="nav-tab active" id="nav-dash" onclick="setPage('dashboard')">🏠 Dashboard</div>
-    <div class="nav-tab" id="nav-com" onclick="setPage('comissoes')">💰 Comissões</div>
-    <div class="nav-tab" id="nav-ven" onclick="setPage('vendas')">📊 Vendas mensais</div>
-    <div class="nav-tab" id="nav-ent" onclick="setPage('entregas')">📦 Entregas</div>
-    <div class="nav-tab" id="nav-sol" onclick="setPage('solicitacoes')">💬 Solicitações</div>
-    <div class="nav-tab" id="nav-cfg" onclick="setPage('config')">⚙️ Configurações</div>
+    <div class="nav-tab active" id="nav-dash" onclick="setPage('dashboard')"><span class="nav-ico">🏠</span><span class="nav-lbl">Dashboard</span></div>
+    <div class="nav-tab" id="nav-ent" onclick="setPage('entregas')"><span class="nav-ico">📦</span><span class="nav-lbl">Entregas</span></div>
+    <div class="nav-tab" id="nav-ped" onclick="setPage('pedidos')"><span class="nav-ico">🧾</span><span class="nav-lbl">Pedidos</span></div>
+    <div class="nav-tab" id="nav-com" onclick="setPage('comissoes')"><span class="nav-ico">💰</span><span class="nav-lbl">Comissões</span></div>
+    <div class="nav-tab" id="nav-ven" onclick="setPage('vendas')"><span class="nav-ico">📊</span><span class="nav-lbl">Vendas</span></div>
+    <div class="nav-tab" id="nav-sol" onclick="setPage('solicitacoes')"><span class="nav-ico">💬</span><span class="nav-lbl">Solicitações</span></div>
+    <div class="nav-tab" id="nav-cfg" onclick="setPage('config')"><span class="nav-ico">⚙️</span><span class="nav-lbl">Config</span></div>
   </div>
 
   <!-- DASHBOARD -->
@@ -270,7 +308,44 @@ textarea{font-family:inherit}
   <!-- COMISSÕES -->
   <div class="page" id="page-comissoes">
     <div class="card">
-      <h3>Lançar pedido <span id="ref-info" style="color:#0C447C;font-size:12px;font-weight:600"></span></h3>
+      <h3>Registrar números que entraram 🔢</h3>
+      <div class="row">
+        <div class="field"><div class="label">Vendedor</div><select id="b-vend"><option value="">Selecione...</option></select></div>
+        <div class="field"><div class="label">Quantidade de números</div><input type="number" id="b-qtd" min="1" step="1" placeholder="Ex: 500"/></div>
+        <div class="field"><div class="label">Observação (opcional)</div><input type="text" id="b-obs" placeholder="Ex: Números de maio"/></div>
+        <button class="btn btn-primary" onclick="addBonus()">+ Registrar</button>
+      </div>
+      <p style="font-size:11px;color:#888;margin-top:6px">O valor é calculado automaticamente pelo bônus configurado para cada vendedor. Entra no mês de referência selecionado acima.</p>
+    </div>
+
+    <div class="card">
+      <h3>Registrar adiantamento 💵</h3>
+      <div class="row">
+        <div class="field"><div class="label">Vendedor</div><select id="a-vend"><option value="">Selecione...</option></select></div>
+        <div class="field"><div class="label">Valor adiantado (R$)</div><input type="number" id="a-val" step="0.01" min="0" placeholder="Ex: 500"/></div>
+        <div class="field"><div class="label">Observação (opcional)</div><input type="text" id="a-obs" placeholder="Ex: Adiantamento maio"/></div>
+        <button class="btn btn-primary" onclick="addAdt()">+ Registrar</button>
+      </div>
+      <p style="font-size:11px;color:#888;margin-top:6px">Entra no mês de referência selecionado acima.</p>
+    </div>
+
+    <div>
+      <h2>Relatórios por vendedor</h2>
+      <div style="margin-bottom:12px;font-size:13px;color:#666">
+        🔍 Filtrar por mês:
+        <select id="f-mes" onchange="renderRel()" style="display:inline-block;width:auto;margin-left:6px;padding:5px 8px">
+          <option value="">Todos os meses</option>
+        </select>
+      </div>
+      <div id="tabs-v" style="margin-bottom:12px"></div>
+      <div id="rel"></div>
+    </div>
+  </div>
+
+  <!-- PEDIDOS -->
+  <div class="page" id="page-pedidos">
+    <div class="card">
+      <h3>Lançar pedido manualmente <span id="ref-info" style="color:#0C447C;font-size:12px;font-weight:600"></span></h3>
       <div class="row">
         <div class="field"><div class="label">Número</div><input type="number" id="p-num" placeholder="Ex: 956"/></div>
         <div class="field"><div class="label">Produto</div><select id="p-prod"><option value="">Selecione...</option></select></div>
@@ -305,37 +380,18 @@ textarea{font-family:inherit}
     </div>
 
     <div class="card">
-      <h3>Registrar números que entraram 🔢</h3>
-      <div class="row">
-        <div class="field"><div class="label">Vendedor</div><select id="b-vend"><option value="">Selecione...</option></select></div>
-        <div class="field"><div class="label">Quantidade de números</div><input type="number" id="b-qtd" min="1" step="1" placeholder="Ex: 500"/></div>
-        <div class="field"><div class="label">Observação (opcional)</div><input type="text" id="b-obs" placeholder="Ex: Números de maio"/></div>
-        <button class="btn btn-primary" onclick="addBonus()">+ Registrar</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+        <h2 style="margin:0">Pedidos lançados</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <select id="ped-f-mes" onchange="renderPedidos()" style="width:auto;padding:6px 10px;font-size:13px">
+            <option value="">Todos os meses</option>
+          </select>
+          <select id="ped-f-prod" onchange="renderPedidos()" style="width:auto;padding:6px 10px;font-size:13px">
+            <option value="">Todos os produtos</option>
+          </select>
+        </div>
       </div>
-      <p style="font-size:11px;color:#888;margin-top:6px">O valor é calculado automaticamente pelo bônus configurado para cada vendedor. Entra no mês de referência selecionado acima.</p>
-    </div>
-
-    <div class="card">
-      <h3>Registrar adiantamento 💵</h3>
-      <div class="row">
-        <div class="field"><div class="label">Vendedor</div><select id="a-vend"><option value="">Selecione...</option></select></div>
-        <div class="field"><div class="label">Valor adiantado (R$)</div><input type="number" id="a-val" step="0.01" min="0" placeholder="Ex: 500"/></div>
-        <div class="field"><div class="label">Observação (opcional)</div><input type="text" id="a-obs" placeholder="Ex: Adiantamento maio"/></div>
-        <button class="btn btn-primary" onclick="addAdt()">+ Registrar</button>
-      </div>
-      <p style="font-size:11px;color:#888;margin-top:6px">Entra no mês de referência selecionado acima.</p>
-    </div>
-
-    <div>
-      <h2>Relatórios por vendedor</h2>
-      <div style="margin-bottom:12px;font-size:13px;color:#666">
-        🔍 Filtrar por mês:
-        <select id="f-mes" onchange="renderRel()" style="display:inline-block;width:auto;margin-left:6px;padding:5px 8px">
-          <option value="">Todos os meses</option>
-        </select>
-      </div>
-      <div id="tabs-v" style="margin-bottom:12px"></div>
-      <div id="rel"></div>
+      <div id="lista-pedidos-gestao"><p class="empty">Nenhum pedido lançado.</p></div>
     </div>
   </div>
 
@@ -490,6 +546,71 @@ textarea{font-family:inherit}
     </div>
   </div>
 </div>
+  <!-- PAINEL DE EDIÇÃO DE PEDIDO -->
+  <div id="ped-overlay" onclick="fecharEditPedido()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;"></div>
+  <div id="ped-panel" style="
+    display:none;position:fixed;bottom:0;left:0;right:0;z-index:301;
+    background:#fff;border-radius:16px 16px 0 0;
+    padding:24px 20px 32px;
+    box-shadow:0 -6px 32px rgba(0,0,0,.18);
+    max-height:90vh;overflow-y:auto;
+    transform:translateY(100%);transition:transform .3s ease;
+  ">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div>
+        <div style="font-size:17px;font-weight:700;color:#003366">✏️ Editar Pedido</div>
+        <div id="ped-panel-sub" style="font-size:12px;color:#888;margin-top:2px"></div>
+      </div>
+      <button onclick="fecharEditPedido()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;padding:4px 8px;border-radius:6px">✕</button>
+    </div>
+
+    <input type="hidden" id="ep-gid"/>
+
+    <div class="row" style="margin-bottom:0">
+      <div class="field"><div class="label">Número do pedido</div><input type="number" id="ep-num" placeholder="Ex: 956"/></div>
+      <div class="field"><div class="label">Mês</div>
+        <select id="ep-mes">
+          <option>Janeiro</option><option>Fevereiro</option><option>Março</option><option>Abril</option>
+          <option>Maio</option><option>Junho</option><option>Julho</option><option>Agosto</option>
+          <option>Setembro</option><option>Outubro</option><option>Novembro</option><option>Dezembro</option>
+        </select>
+      </div>
+      <div class="field" style="max-width:100px"><div class="label">Ano</div><input type="number" id="ep-ano" min="2020" max="2099" placeholder="2025"/></div>
+    </div>
+
+    <div class="row" style="margin-bottom:0;margin-top:10px">
+      <div class="field"><div class="label">Produto</div><select id="ep-prod"><option value="">Selecione...</option></select></div>
+      <div class="field"><div class="label">Cidade</div><input type="text" id="ep-cid" placeholder="Ex: Porto Alegre"/></div>
+      <div class="field" style="max-width:100px"><div class="label">UF</div>
+        <select id="ep-uf">
+          <option value="">UF</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option>
+          <option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option>
+          <option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option>
+          <option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option>
+          <option>SE</option><option>TO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:0;margin-top:10px">
+      <div class="field"><div class="label">Valor (R$)</div><input type="number" id="ep-val" step="0.01" min="0" placeholder="Ex: 5000"/></div>
+      <div class="field"><div class="label">Vendedor</div><select id="ep-vend"><option value="todos">Todos os vendedores</option></select></div>
+    </div>
+
+    <div class="check-row" style="margin-top:12px">
+      <input type="checkbox" id="ep-meia"/>
+      <label for="ep-meia">Metade da comissão (desconto especial)</label>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn btn-primary" style="flex:1;font-size:15px;padding:12px" onclick="salvarEditPedido()">✅ Salvar alterações</button>
+      <button class="btn btn-danger" style="flex:1;font-size:15px;padding:12px" onclick="fecharEditPedido()">Cancelar</button>
+    </div>
+  </div>
+
+
 <div id="save-info" class="save-info">✓ Salvo</div>
 
 <script>
@@ -627,6 +748,7 @@ function carregar() {
     sols = d.sols || [];
     renderV(); renderSel(); renderTabs(); renderF(); renderProd(); renderSelProd(); renderLinksVendedores(); if(document.getElementById('page-dashboard').classList.contains('active'))renderDashboard();
     if (document.getElementById('page-entregas').classList.contains('active')) renderEntregas();
+    if (document.getElementById('page-pedidos').classList.contains('active')) renderPedidos();
     if (document.getElementById('page-vendas').classList.contains('active')) renderVen();
   });
 }
@@ -649,9 +771,10 @@ function setPage(p){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(e=>e.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
-  const navId='nav-'+({'comissoes':'com','vendas':'ven','entregas':'ent','solicitacoes':'sol','config':'cfg','dashboard':'dash'}[p]||p.substring(0,3));
+  const navId='nav-'+({'comissoes':'com','vendas':'ven','entregas':'ent','solicitacoes':'sol','config':'cfg','dashboard':'dash','pedidos':'ped'}[p]||p.substring(0,3));
   document.getElementById(navId).classList.add('active');
   if(p==='dashboard')renderDashboard();
+  if(p==='pedidos')renderPedidos();
   if(p==='vendas')renderVen();
   if(p==='entregas')renderEntregas();
   if(p==='solicitacoes'){renderSelPedidoSol();renderSolicitacoes();}
@@ -687,6 +810,7 @@ function renderSelProd(){
   let h='<option value="">Selecione...</option>';
   prods.forEach(p=>{h+='<option value="'+p.id+'">'+p.nome+'</option>';});
   document.getElementById('p-prod').innerHTML=h;
+  if(document.getElementById('ped-f-prod'))renderSelPedFiltros();
 }
 
 /* ========== VENDEDORES ========== */
@@ -800,7 +924,7 @@ function renderSel(){
 function uniquePedidos(lista){
   const visto={};
   const uniq=lista.filter(p=>{if(visto[p.gid])return false;visto[p.gid]=true;return true;});
-  return uniq.sort((a,b)=>parseInt(a.num)-parseInt(b.num));
+  return uniq.sort((a,b)=>parseInt(b.num)-parseInt(a.num));
 }
 
 function addPed(){
@@ -820,40 +944,87 @@ function addPed(){
     const fator=meia?0.5:1;
     ps.push({id:gid+i,gid,num,prod,cid,uf,val,vid:v.id,mes,ano,meia,com:parseFloat((val*v.perc/100*fator).toFixed(2))});
   });
-  lp();salvar();renderV();renderRel();renderF();
+  lp();salvar();renderV();renderRel();renderF();if(document.getElementById('page-pedidos').classList.contains('active'))renderPedidos();
 }
 function delPedidoGid(gid){
   if(!confirm('Remover este pedido de todos os vendedores?'))return;
   ps=ps.filter(p=>p.gid!==gid);
-  salvar();renderV();renderRel();renderF();
+  salvar();renderV();renderRel();renderF();renderPedidos();
 }
 
 function editarPedido(gid){
-  // Pega o primeiro registro desse gid como referência
   const ref=ps.find(p=>p.gid===gid);if(!ref)return;
 
-  const novoVal=prompt(
-    'Pedido Nº '+ref.num+' — '+ref.cid+' / '+ref.uf+'\n'+
-    'Valor atual: R$ '+ref.val.toLocaleString('pt-BR',{minimumFractionDigits:2})+'\n\n'+
-    'Novo valor (R$):',
-    ref.val
-  );
-  if(novoVal===null)return;
-  const val=parseFloat(novoVal);
-  if(isNaN(val)||val<=0){alert('Valor inválido.');return;}
+  // Preenche painel
+  document.getElementById('ep-gid').value=gid;
+  document.getElementById('ep-num').value=ref.num||'';
+  document.getElementById('ep-mes').value=ref.mes||MS[0];
+  document.getElementById('ep-ano').value=ref.ano||new Date().getFullYear();
+  document.getElementById('ep-cid').value=ref.cid||'';
+  document.getElementById('ep-uf').value=ref.uf||'';
+  document.getElementById('ep-val').value=ref.val||'';
+  document.getElementById('ep-meia').checked=ref.meia||false;
+  document.getElementById('ped-panel-sub').textContent='Pedido Nº '+ref.num+' — '+ref.cid+' / '+ref.uf;
 
-  // Atualiza todos os registros com mesmo gid (todos os vendedores)
-  ps.forEach(p=>{
-    if(p.gid===gid){
-      p.val=val;
-      const v=vs.find(x=>x.id===p.vid);
-      if(v){
-        const fator=p.meia?0.5:1;
-        p.com=parseFloat((val*v.perc/100*fator).toFixed(2));
-      }
-    }
+  // Preenche select de produto
+  let hp='<option value="">Selecione...</option>';
+  prods.forEach(p=>{hp+=`<option value="${p.id}"${p.id===ref.prod?' selected':''}>${p.nome}</option>`;});
+  document.getElementById('ep-prod').innerHTML=hp;
+
+  // Preenche select de vendedor — detecta se é "todos" ou vendedor único
+  const gidRegs=ps.filter(p=>p.gid===gid);
+  let hv='<option value="todos">Todos os vendedores</option>';
+  vs.forEach(v=>{hv+=`<option value="${v.id}">${v.nome} (${v.perc}%)</option>`;});
+  document.getElementById('ep-vend').innerHTML=hv;
+  if(gidRegs.length===1){
+    document.getElementById('ep-vend').value=String(gidRegs[0].vid);
+  }
+
+  // Abre painel
+  document.getElementById('ped-overlay').style.display='block';
+  const panel=document.getElementById('ped-panel');
+  panel.style.display='block';
+  requestAnimationFrame(()=>panel.style.transform='translateY(0)');
+}
+
+function fecharEditPedido(){
+  const panel=document.getElementById('ped-panel');
+  panel.style.transform='translateY(100%)';
+  setTimeout(()=>{
+    panel.style.display='none';
+    document.getElementById('ped-overlay').style.display='none';
+  },300);
+}
+
+function salvarEditPedido(){
+  const gid=parseInt(document.getElementById('ep-gid').value);
+  const num=document.getElementById('ep-num').value.trim();
+  const mes=document.getElementById('ep-mes').value;
+  const ano=parseInt(document.getElementById('ep-ano').value);
+  const prod=parseInt(document.getElementById('ep-prod').value)||null;
+  const cid=document.getElementById('ep-cid').value.trim().toUpperCase();
+  const uf=document.getElementById('ep-uf').value.trim();
+  const val=parseFloat(document.getElementById('ep-val').value);
+  const meia=document.getElementById('ep-meia').checked;
+  const vidSel=document.getElementById('ep-vend').value;
+
+  if(!num||!cid||!uf||isNaN(val)||val<=0){alert('Preencha número, cidade, UF e valor.');return;}
+  if(isNaN(ano)||ano<2020){alert('Ano inválido.');return;}
+
+  // Decide quais registros atualizar
+  const alvos=vidSel==='todos'
+    ?ps.filter(p=>p.gid===gid)
+    :ps.filter(p=>p.gid===gid&&p.vid===parseInt(vidSel));
+
+  alvos.forEach(p=>{
+    p.num=num;p.mes=mes;p.ano=ano;p.prod=prod;
+    p.cid=cid;p.uf=uf;p.val=val;p.meia=meia;
+    const v=vs.find(x=>x.id===p.vid);
+    if(v)p.com=parseFloat((val*v.perc/100*(meia?0.5:1)).toFixed(2));
   });
-  salvar();renderV();renderRel();renderF();
+
+  salvar();renderV();renderRel();renderF();renderPedidos();
+  fecharEditPedido();
 }
 function lp(){
   document.getElementById('p-num').value='';
@@ -1122,7 +1293,7 @@ function renderRel(){
   const v=vs.find(x=>x.id===ta);if(!v){el.innerHTML='';return;}
   const f=document.getElementById('f-mes').value;
   let mp=ps.filter(p=>p.vid===v.id);if(f)mp=mp.filter(p=>ck(p.mes,p.ano)===f);
-  mp.sort((a,b)=>parseInt(a.num)-parseInt(b.num));
+  mp.sort((a,b)=>parseInt(b.num)-parseInt(a.num));
   let ma=ads.filter(a=>a.vid===v.id);if(f)ma=ma.filter(a=>ck(a.mes,a.ano)===f);
   let mb=bonus.filter(b=>b.vid===v.id);if(f)mb=mb.filter(b=>ck(b.mes,b.ano)===f);
   const unique=uniquePedidos(mp);
@@ -1414,7 +1585,7 @@ function pdfVendedor(vid){
   const v=vs.find(x=>x.id===vid);
   const f=document.getElementById('f-mes').value;
   let mp=ps.filter(p=>p.vid===vid);if(f)mp=mp.filter(p=>ck(p.mes,p.ano)===f);
-  mp.sort((a,b)=>parseInt(a.num)-parseInt(b.num));
+  mp.sort((a,b)=>parseInt(b.num)-parseInt(a.num));
   let ma=ads.filter(a=>a.vid===vid);if(f)ma=ma.filter(a=>ck(a.mes,a.ano)===f);
   let mb=bonus.filter(b=>b.vid===vid);if(f)mb=mb.filter(b=>ck(b.mes,b.ano)===f);
   const uniq=uniquePedidos(mp);
@@ -1540,7 +1711,7 @@ function renderEntregas(){
   lista.sort((a,b)=>{
     const sd=STATUS_ORD[getSt(a.gid)]-STATUS_ORD[getSt(b.gid)];
     if(sd!==0)return sd;
-    return parseInt(a.num)-parseInt(b.num);
+    return parseInt(b.num)-parseInt(a.num);
   });
 
   if(!lista.length){el.innerHTML='<p class="empty" style="padding:32px">Nenhum pedido'+(fSt?' com este status':'')+'.</p>';return;}
@@ -1600,7 +1771,7 @@ function pdfEntregas(){
   lista.sort((a,b)=>{
     const sd=STATUS_ORD[getSt(a.gid)]-STATUS_ORD[getSt(b.gid)];
     if(sd!==0)return sd;
-    return parseInt(a.num)-parseInt(b.num);
+    return parseInt(b.num)-parseInt(a.num);
   });
 
   const nAg=uniq.filter(p=>getSt(p.gid)==='aguardando').length;
@@ -1826,6 +1997,72 @@ function renderDashboard(){
 
   el.innerHTML=h;
 }
+
+/* ========== PEDIDOS PAGE ========== */
+function renderSelPedFiltros(){
+  // Meses
+  const sel=document.getElementById('ped-f-mes');if(!sel)return;
+  const atual=sel.value;
+  const g={};uniquePedidos(ps).forEach(p=>{const c=ck(p.mes,p.ano);if(!g[c])g[c]={mes:p.mes,ano:p.ano};});
+  const ls=Object.values(g).sort((a,b)=>ord(ck(a.mes,a.ano))-ord(ck(b.mes,b.ano)));
+  let h='<option value="">Todos os meses</option>';
+  ls.forEach(m=>{const c=ck(m.mes,m.ano);h+=`<option value="${c}"${atual===c?' selected':''}>${m.mes} ${m.ano}</option>`;});
+  sel.innerHTML=h;
+  // Produtos
+  const selP=document.getElementById('ped-f-prod');if(!selP)return;
+  const atualP=selP.value;
+  let hp='<option value="">Todos os produtos</option>';
+  prods.forEach(p=>{hp+=`<option value="${p.id}"${atualP===String(p.id)?' selected':''}>${p.nome}</option>`;});
+  selP.innerHTML=hp;
+}
+
+function renderPedidos(){
+  renderSelPedFiltros();
+  const el=document.getElementById('lista-pedidos-gestao');if(!el)return;
+  const fMes=document.getElementById('ped-f-mes')?document.getElementById('ped-f-mes').value:'';
+  const fProd=document.getElementById('ped-f-prod')?document.getElementById('ped-f-prod').value:'';
+
+  let lista=uniquePedidos(ps);
+  if(fMes)lista=lista.filter(p=>ck(p.mes,p.ano)===fMes);
+  if(fProd)lista=lista.filter(p=>String(p.prod)===fProd);
+  lista=lista.slice().sort((a,b)=>{
+    const od=ord(ck(b.mes,b.ano))-ord(ck(a.mes,a.ano));
+    return od!==0?od:parseInt(b.num)-parseInt(a.num);
+  });
+
+  if(!lista.length){el.innerHTML='<p class="empty">Nenhum pedido encontrado.</p>';return;}
+
+  const tvol=lista.reduce((s,p)=>s+p.val,0);
+  let h='<div class="table-wrap"><table><thead><tr>'
+    +'<th>Nº</th><th>Mês</th><th>Produto</th><th>Cidade</th><th>UF</th>'
+    +'<th style="text-align:right">Valor</th><th style="text-align:right">Ações</th>'
+    +'</tr></thead><tbody>';
+
+  lista.forEach(p=>{
+    const pn=prods.find(x=>x.id===p.prod);
+    h+=`<tr>
+      <td><strong>${p.num}</strong></td>
+      <td><span class="badge-m">${p.mes.substring(0,3)} ${p.ano}</span></td>
+      <td>${pn?`<span class="badge-prod">${pn.nome}</span>`:'<span style="color:#ccc">—</span>'}</td>
+      <td>${p.cid}</td>
+      <td><strong>${p.uf}</strong></td>
+      <td style="text-align:right;font-weight:600">${fmt(p.val)}</td>
+      <td style="text-align:right;white-space:nowrap">
+        <button class="btn" style="font-size:11px;padding:3px 8px;margin-right:4px" onclick="editarPedido(${p.gid})">✏️ Editar</button>
+        <button class="del" onclick="delPedidoGid(${p.gid})">✕</button>
+      </td>
+    </tr>`;
+  });
+
+  h+=`<tr style="background:#003366">
+    <td colspan="5" style="color:#fff;font-weight:700;font-size:12px;letter-spacing:.3px">TOTAL — ${lista.length} pedido${lista.length!==1?'s':''}</td>
+    <td style="text-align:right;color:#fff;font-weight:700">${fmt(tvol)}</td>
+    <td></td>
+  </tr>`;
+
+  el.innerHTML=h+'</tbody></table></div>';
+}
+
 
 /* ========== INIT ========== */
 const hj=new Date();
